@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="screen-orientation" content="landscape">
+    <title>SMA Solar Academy - German Technical Terms Trainer</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23c00d0d' width='100' height='100' rx='10'/><text x='50' y='65' font-size='40' text-anchor='middle' fill='white' font-weight='bold'>SMA</text></svg>">
+    <style>
+        :root {
+            --sma-red: #c00d0d;
+            --sma-red-dark: #9a0a0a;
+            --sma-red-light: #e31e24;
+            --sma-gray: #4a4a4a;
+            --sma-gray-light: #f5f5f5;
+            --secondary: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --white: #ffffff;
+            --dc-color: #ef4444;
+            --ac-color: #3b82f6;
+            --data-color: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--sma-gray) 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        /* SMA Logo SVG */
+        .sma-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sma-logo-box {
+            background: var(--sma-red);
+            color: white;
+            font-weight: 900;
+            font-size: 1.2rem;
+            padding: 6px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .sma-logo-text {
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Force landscape orientation hint */
+        @media screen and (orientation: portrait) {
+            body::before {
+                content: "📱 Rotate your device to landscape for best experience";
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: var(--sma-red);
+                color: white;
+                padding: 10px;
+                text-align: center;
+                font-weight: 600;
+                z-index: 9999;
+                font-size: 0.9rem;
+            }
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px 15px;
+        }
+
+        header {
+            text-align: center;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--sma-red) 0%, var(--sma-red-dark) 100%);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 40px rgba(192, 13, 13, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-center {
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--white);
+            font-size: 1.3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.8rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sun-icon {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        nav button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--white);
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        nav button:hover, nav button.active {
+            background: var(--sma-red);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            display: none;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: var(--sma-red);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--sma-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .section h2 .sma-logo-box {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+        }
+
+        /* Vocabulary Cards - LANDSCAPE GRID */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--sma-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocab-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .vocab-card.flipped {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .vocab-german {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .vocab-pronunciation {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .vocab-english {
+            font-size: 1rem;
+            color: var(--secondary);
+            font-weight: 600;
+            display: none;
+        }
+
+        .vocab-card.flipped .vocab-english {
+            display: block;
+        }
+
+        .vocab-context {
+            font-size: 0.8rem;
+            color: #4b5563;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #d1d5db;
+            display: none;
+        }
+
+        .vocab-card.flipped .vocab-context {
+            display: block;
+        }
+
+        .tap-hint {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            text-align: right;
+            margin-top: 3px;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .category-btn {
+            padding: 6px 14px;
+            border: 2px solid var(--sma-red);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--sma-red);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--sma-red);
+            color: var(--white);
+        }
+
+        /* Search */
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--sma-red);
+            box-shadow: 0 0 0 3px rgba(192, 13, 13, 0.2);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            text-align: center;
+        }
+
+        .quiz-progress {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .quiz-progress-bar {
+            background: linear-gradient(90deg, var(--success), var(--sma-red));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .quiz-score {
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-radius: 10px;
+            border-left: 5px solid var(--sma-red);
+        }
+
+        .quiz-hint {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .quiz-option {
+            padding: 12px 15px;
+            border: 3px solid #e5e7eb;
+            border-radius: 8px;
+            background: var(--white);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--sma-red);
+            background: #fef2f2;
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--dc-color);
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .quiz-option.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-feedback {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .quiz-feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sma-red) 0%, var(--sma-red-dark) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(192, 13, 13, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            border-left: 4px solid var(--sma-red);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sma-red);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        /* Flashcard Mode */
+        .flashcard-container {
+            perspective: 1000px;
+            margin-bottom: 15px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 180px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--sma-red) 0%, var(--sma-red-dark) 100%);
+            color: var(--white);
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, var(--secondary) 0%, #1d4ed8 100%);
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-word {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .flashcard-hint {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .flashcard-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================ */
+        /* SMA POWER FLOW DIAGRAM - REALISTIC LAYOUT */
+        /* ============================================ */
+        .power-flow-section {
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .power-flow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .power-flow-header h3 {
+            color: white;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .power-flow-legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+        }
+
+        .legend-line {
+            width: 30px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .legend-line.dc { background: var(--dc-color); }
+        .legend-line.ac { background: var(--ac-color); }
+        .legend-line.data { background: var(--data-color); border-style: dashed; }
+
+        /* Main Diagram Container */
+        .pf-diagram {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            min-height: 500px;
+            position: relative;
+        }
+
+        /* Row containers */
+        .pf-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .pf-row-top {
+            padding-top: 10px;
+        }
+
+        .pf-row-middle {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .pf-row-bottom {
+            padding-bottom: 10px;
+        }
+
+        /* Node Styling */
+        .pf-node {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            min-width: 100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pf-node:hover {
+            transform: scale(1.05);
+            border-color: var(--sma-red);
+            box-shadow: 0 0 25px rgba(192, 13, 13, 0.4);
+        }
+
+        .pf-node.active {
+            border-color: var(--sma-red);
+            box-shadow: 0 0 30px rgba(192, 13, 13, 0.6);
+        }
+
+        .pf-node.sma-device {
+            background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+            border: 3px solid var(--sma-red);
+        }
+
+        .pf-node.sma-device::after {
+            content: 'SMA';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--sma-red);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .pf-node-icon {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .pf-node-german {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+
+        .pf-node-english {
+            font-size: 0.7rem;
+            color: #6b7280;
+        }
+
+        .pf-node-model {
+            font-size: 0.65rem;
+            color: var(--sma-red);
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Sun Node - Special */
+        .pf-sun {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px solid #f59e0b;
+            min-width: 120px;
+        }
+
+        .pf-sun .pf-node-icon {
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Connection Lines */
+        .pf-connection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            position: relative;
+        }
+
+        .pf-connection-line {
+            width: 4px;
+            height: 40px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .pf-connection-line.dc {
+            background: linear-gradient(180deg, var(--dc-color), var(--dc-color));
+        }
+
+        .pf-connection-line.ac {
+            background: linear-gradient(180deg, var(--ac-color), var(--ac-color));
+        }
+
+        .pf-connection-line.data {
+            background: repeating-linear-gradient(
+                180deg,
+                var(--data-color),
+                var(--data-color) 5px,
+                transparent 5px,
+                transparent 10px
+            );
+            width: 3px;
+        }
+
+        .pf-connection-h {
+            height: 4px;
+            width: 60px;
+            border-radius: 2px;
+        }
+
+        .pf-connection-h.dc { background: var(--dc-color); }
+        .pf-connection-h.ac { background: var(--ac-color); }
+        .pf-connection-h.data {
+            background: repeating-linear-gradient(
+                90deg,
+                var(--data-color),
+                var(--data-color) 5px,
+                transparent 5px,
+                transparent 10px
+            );
+            height: 3px;
+        }
+
+        .pf-arrow {
+            color: white;
+            font-size: 1rem;
+        }
+
+        .pf-arrow.down { transform: rotate(90deg); }
+        .pf-arrow.up { transform: rotate(-90deg); }
+        .pf-arrow.left { transform: rotate(180deg); }
+        .pf-arrow.bidirectional { font-size: 0.9rem; }
+
+        .pf-label {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* Panels Group */
+        .pf-panels-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .pf-panel-string {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pf-panel-array {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .pf-mini-panel {
+            width: 25px;
+            height: 35px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            border: 1px solid #4a90c2;
+            border-radius: 2px;
+        }
+
+        .pf-string-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Central Inverter Area */
+        .pf-inverter-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(192, 13, 13, 0.1);
+            border-radius: 15px;
+            border: 2px dashed rgba(192, 13, 13, 0.3);
+        }
+
+        /* Side Columns */
+        .pf-left-column, .pf-right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Battery Section */
+        .pf-battery-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            border: 2px dashed rgba(16, 185, 129, 0.3);
+        }
+
+        /* Data/Communication Section */
+        .pf-data-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            border: 2px dashed rgba(139, 92, 246, 0.3);
+        }
+
+        /* Grid Section */
+        .pf-grid-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Home Section */
+        .pf-home-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pf-loads {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pf-load-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.7rem;
+            min-width: 60px;
+        }
+
+        .pf-load-item .pf-node-icon {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+
+        /* Detail Panel */
+        .pf-detail-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+            border-left: 5px solid var(--sma-red);
+        }
+
+        .pf-detail-panel.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pf-detail-title {
+            font-weight: 700;
+            color: var(--sma-red);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pf-detail-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .pf-detail-section h4 {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pf-detail-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pf-detail-section li {
+            font-size: 0.85rem;
+            padding: 5px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+
+        .pf-detail-section li:last-child {
+            border-bottom: none;
+        }
+
+        .term-de {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .term-en {
+            color: var(--secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Flow Animation */
+        @keyframes flowDown {
+            0% { opacity: 0.3; transform: translateY(-3px); }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; transform: translateY(3px); }
+        }
+
+        @keyframes flowRight {
+            0% { opacity: 0.3; transform: translateX(-3px); }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; transform: translateX(3px); }
+        }
+
+        .pf-connection-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: flowDown 1.5s infinite;
+        }
+
+        .pf-connection-h::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: flowRight 1.5s infinite;
+        }
+
+        /* Diagram Sections Grid */
+        .diagram-container {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .diagram-title {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .component-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .component-box {
+            background: var(--white);
+            border: 2px solid var(--sma-red);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .component-box:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 20px rgba(192, 13, 13, 0.3);
+        }
+
+        .component-box.active {
+            background: var(--sma-red);
+            color: var(--white);
+        }
+
+        .component-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .component-german {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 3px;
+        }
+
+        .component-english {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .component-box.active .component-english {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .component-detail {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 12px;
+            display: none;
+            border-left: 4px solid var(--sma-red);
+        }
+
+        .component-detail.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Installation Steps */
+        .installation-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+            counter-reset: step;
+        }
+
+        .step-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 12px 12px 12px 55px;
+            position: relative;
+            border-left: 3px solid var(--sma-red);
+        }
+
+        .step-card::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: var(--sma-red);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .step-german {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .step-english {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .step-detail {
+            font-size: 0.8rem;
+            color: #4b5563;
+        }
+
+        /* Safety Grid */
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .safety-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 4px solid var(--dc-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+
+        .safety-card .vocab-german {
+            color: #991b1b;
+            font-size: 1rem;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .tool-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 15px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .tool-icon {
+            font-size: 1.5rem;
+        }
+
+        .tool-info {
+            flex: 1;
+        }
+
+        .tool-info .vocab-german {
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .sma-footer {
+            text-align: center;
+            padding: 15px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+        }
+
+        .sma-footer a {
+            color: var(--sma-red-light);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.1rem;
+            }
+
+            nav button {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+
+            .vocab-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .flashcard {
+                height: 150px;
+            }
+
+            .flashcard-word {
+                font-size: 1.2rem;
+            }
+
+            .pf-diagram {
+                transform: scale(0.85);
+                transform-origin: top center;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .section {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+
+            nav, .quiz-container, .flashcard-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <div class="sma-logo">
+                    <span class="sma-logo-box">SMA</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <h1>SMA Solar Academy Trainer</h1>
+                <p>German Technical Terms for Solar Inverter Installation</p>
+            </div>
+            <div class="header-right">
+                <div class="sun-icon">☀️</div>
+            </div>
+        </header>
+
+        <nav>
+            <button class="active" onclick="showSection('vocabulary')">📚 Vocabulary</button>
+            <button onclick="showSection('powerflow')">⚡ Power Flow</button>
+            <button onclick="showSection('flashcards')">🔄 Flashcards</button>
+            <button onclick="showSection('quiz')">❓ Quiz</button>
+            <button onclick="showSection('diagrams')">📊 Diagrams</button>
+            <button onclick="showSection('installation')">🔧 Installation</button>
+            <button onclick="showSection('safety')">⚠️ Safety</button>
+            <button onclick="showSection('tools')">🛠️ Tools</button>
+        </nav>
+
+        <!-- VOCABULARY SECTION -->
+        <div id="vocabulary" class="section active">
+            <h2><span class="sma-logo-box">SMA</span> Technical Vocabulary</h2>
+            
+            <input type="text" class="search-box" placeholder="🔍 Search terms (German or English)..." oninput="filterVocab(this.value)">
+            
+            <div class="category-filter">
+                <button class="category-btn active" onclick="filterCategory('electrical')">Electrical</button>
+                <button class="category-btn" onclick="filterCategory('components')">Components</button>
+                <button class="category-btn" onclick="filterCategory('installation')">Installation</button>
+                <button class="category-btn" onclick="filterCategory('measurements')">Measurements</button>
+                <button class="category-btn" onclick="filterCategory('safety')">Safety</button>
+                <button class="category-btn" onclick="filterCategory('sma')">SMA Products</button>
+                <button class="category-btn" onclick="filterCategory('all')">All Terms</button>
+            </div>
+
+            <div class="vocab-grid" id="vocabGrid">
+                <!-- Vocabulary cards will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- POWER FLOW SECTION - SMA SYSTEM -->
+        <div id="powerflow" class="section">
+            <h2><span class="sma-logo-box">SMA</span> System Power & Data Flow</h2>
+            
+            <div class="power-flow-section">
+                <div class="power-flow-header">
+                    <h3>
+                        <span class="sma-logo-box" style="font-size: 0.7rem; padding: 3px 6px;">SMA</span>
+                        Komplettes Photovoltaik-System (Complete PV System)
+                    </h3>
+                    <div class="power-flow-legend">
+                        <div class="legend-item">
+                            <div class="legend-line dc"></div>
+                            <span>DC Gleichstrom</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line ac"></div>
+                            <span>AC Wechselstrom</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line data"></div>
+                            <span>Daten / Data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REALISTIC DIAGRAM LAYOUT -->
+                <div class="pf-diagram">
+                    
+                    <!-- ROW 1: SUN -->
+                    <div class="pf-row pf-row-top">
+                        <div class="pf-node pf-sun" onclick="showPowerFlowDetail('sun')">
+                            <div class="pf-node-icon">☀️</div>
+                            <div class="pf-node-german">Sonnenlicht</div>
+                            <div class="pf-node-english">Sunlight</div>
+                        </div>
+                    </div>
+
+                    <!-- Connection: Sun to Panels -->
+                    <div class="pf-row">
+                        <div class="pf-connection">
+                            <div class="pf-label">Photonen / Photons</div>
+                            <div class="pf-arrow down">➜</div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 2: SOLAR PANELS -->
+                    <div class="pf-row">
+                        <div class="pf-panels-group">
+                            <div class="pf-panel-string">
+                                <div class="pf-panel-array">
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                </div>
+                                <div class="pf-string-label">String 1</div>
+                            </div>
+                            <div class="pf-panel-string">
+                                <div class="pf-panel-array">
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                    <div class="pf-mini-panel"></div>
+                                </div>
+                                <div class="pf-string-label">String 2</div>
+                            </div>
+                        </div>
+                        <div class="pf-node" onclick="showPowerFlowDetail('panels')" style="margin-left: 20px;">
+                            <div class="pf-node-icon">🔲</div>
+                            <div class="pf-node-german">Solarmodule</div>
+                            <div class="pf-node-english">Solar Panels</div>
+                            <div class="pf-node-model">z.B. 400Wp Module</div>
+                        </div>
+                    </div>
+
+                    <!-- Connection: Panels to DC Components -->
+                    <div class="pf-row">
+                        <div class="pf-connection">
+                            <div class="pf-connection-line dc"></div>
+                            <div class="pf-label">DC / Gleichstrom<br>String-Spannung</div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 3: MAIN SYSTEM - DC Side, Inverter, AC Side -->
+                    <div class="pf-row pf-row-middle">
+                        
+                        <!-- LEFT: DC Side + Battery -->
+                        <div class="pf-left-column">
+                            <!-- DC Junction Box -->
+                            <div class="pf-node" onclick="showPowerFlowDetail('junction')">
+                                <div class="pf-node-icon">📦</div>
+                                <div class="pf-node-german">Generator-<br>anschlusskasten</div>
+                                <div class="pf-node-english">DC Junction Box</div>
+                            </div>
+                            
+                            <div class="pf-connection">
+                                <div class="pf-connection-line dc"></div>
+                            </div>
+
+                            <!-- DC Disconnect -->
+                            <div class="pf-node" onclick="showPowerFlowDetail('dcdisconnect')">
+                                <div class="pf-node-icon">🔌</div>
+                                <div class="pf-node-german">DC-Freischalter</div>
+                                <div class="pf-node-english">DC Disconnect</div>
+                            </div>
+                        </div>
+
+                        <!-- CENTER: SMA Inverter Area -->
+                        <div class="pf-inverter-area">
+                            <div style="color: white; font-size: 0.75rem; margin-bottom: 5px;">SMA Wechselrichter-System</div>
+                            
+                            <!-- MPPT Tracker -->
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('mppt')">
+                                <div class="pf-node-icon">📈</div>
+                                <div class="pf-node-german">MPP-Tracker</div>
+                                <div class="pf-node-english">MPPT Controller</div>
+                                <div class="pf-node-model">Integriert / Integrated</div>
+                            </div>
+
+                            <div class="pf-connection">
+                                <div class="pf-connection-line dc" style="height: 20px;"></div>
+                            </div>
+
+                            <!-- Main Inverter -->
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('inverter')" style="min-width: 140px;">
+                                <div class="pf-node-icon">⚡</div>
+                                <div class="pf-node-german">Wechselrichter</div>
+                                <div class="pf-node-english">Inverter</div>
+                                <div class="pf-node-model">SMA Sunny Tripower</div>
+                            </div>
+
+                            <div class="pf-connection">
+                                <div class="pf-connection-line ac" style="height: 20px;"></div>
+                            </div>
+
+                            <!-- AC Output -->
+                            <div class="pf-node" onclick="showPowerFlowDetail('acoutput')">
+                                <div class="pf-node-icon">🔌</div>
+                                <div class="pf-node-german">AC-Ausgang</div>
+                                <div class="pf-node-english">AC Output</div>
+                                <div class="pf-node-model">230V / 400V</div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: AC Side + Grid -->
+                        <div class="pf-right-column">
+                            <!-- Distribution Panel -->
+                            <div class="pf-node" onclick="showPowerFlowDetail('distribution')">
+                                <div class="pf-node-icon">🔲</div>
+                                <div class="pf-node-german">Verteilerkasten</div>
+                                <div class="pf-node-english">Distribution Panel</div>
+                            </div>
+
+                            <div class="pf-connection">
+                                <div class="pf-connection-line ac"></div>
+                            </div>
+
+                            <!-- Meter -->
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('meter')">
+                                <div class="pf-node-icon">📊</div>
+                                <div class="pf-node-german">Energiezähler</div>
+                                <div class="pf-node-english">Energy Meter</div>
+                                <div class="pf-node-model">SMA Energy Meter</div>
+                            </div>
+
+                            <div class="pf-connection">
+                                <div class="pf-connection-line ac"></div>
+                                <div class="pf-arrow bidirectional">⇅</div>
+                            </div>
+
+                            <!-- Grid -->
+                            <div class="pf-node" onclick="showPowerFlowDetail('grid')">
+                                <div class="pf-node-icon">🏭</div>
+                                <div class="pf-node-german">Stromnetz</div>
+                                <div class="pf-node-english">Power Grid</div>
+                                <div class="pf-node-model">Netzbetreiber</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 4: BATTERY SECTION (Below Inverter) -->
+                    <div class="pf-row">
+                        <div class="pf-battery-section">
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('batteryinverter')">
+                                <div class="pf-node-icon">🔄</div>
+                                <div class="pf-node-german">Batterie-<br>wechselrichter</div>
+                                <div class="pf-node-english">Battery Inverter</div>
+                                <div class="pf-node-model">SMA Sunny Boy Storage</div>
+                            </div>
+
+                            <div class="pf-connection" style="flex-direction: row;">
+                                <div class="pf-connection-h dc" style="width: 40px; position: relative;"></div>
+                                <div class="pf-arrow bidirectional">⇄</div>
+                            </div>
+
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('bms')">
+                                <div class="pf-node-icon">🖥️</div>
+                                <div class="pf-node-german">BMS</div>
+                                <div class="pf-node-english">Battery Mgmt</div>
+                            </div>
+
+                            <div class="pf-connection" style="flex-direction: row;">
+                                <div class="pf-connection-h dc" style="width: 40px; position: relative;"></div>
+                                <div class="pf-arrow bidirectional">⇄</div>
+                            </div>
+
+                            <div class="pf-node" onclick="showPowerFlowDetail('battery')">
+                                <div class="pf-node-icon">🔋</div>
+                                <div class="pf-node-german">Batterie-<br>speicher</div>
+                                <div class="pf-node-english">Battery Storage</div>
+                                <div class="pf-node-model">z.B. BYD HVS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 5: DATA/COMMUNICATION SECTION -->
+                    <div class="pf-row">
+                        <div class="pf-data-section">
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('datamanager')">
+                                <div class="pf-node-icon">📡</div>
+                                <div class="pf-node-german">Datenlogger</div>
+                                <div class="pf-node-english">Data Logger</div>
+                                <div class="pf-node-model">SMA Data Manager M</div>
+                            </div>
+
+                            <div class="pf-connection" style="flex-direction: row;">
+                                <div class="pf-connection-h data" style="width: 50px;"></div>
+                                <div class="pf-label" style="color: var(--data-color);">Speedwire/<br>Modbus</div>
+                            </div>
+
+                            <div class="pf-node sma-device" onclick="showPowerFlowDetail('portal')">
+                                <div class="pf-node-icon">☁️</div>
+                                <div class="pf-node-german">Sunny Portal</div>
+                                <div class="pf-node-english">Cloud Monitoring</div>
+                                <div class="pf-node-model">SMA Sunny Portal</div>
+                            </div>
+
+                            <div class="pf-connection" style="flex-direction: row;">
+                                <div class="pf-connection-h data" style="width: 50px;"></div>
+                                <div class="pf-label" style="color: var(--data-color);">Internet/<br>WLAN</div>
+                            </div>
+
+                            <div class="pf-node" onclick="showPowerFlowDetail('app')">
+                                <div class="pf-node-icon">📱</div>
+                                <div class="pf-node-german">SMA App</div>
+                                <div class="pf-node-english">Mobile App</div>
+                                <div class="pf-node-model">SMA Energy App</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 6: HOME LOADS -->
+                    <div class="pf-row pf-row-bottom">
+                        <div class="pf-home-section">
+                            <div style="color: white; font-size: 0.8rem; margin-bottom: 10px;">Verbraucher / Home Loads</div>
+                            <div class="pf-loads">
+                                <div class="pf-load-item" onclick="showPowerFlowDetail('loads')">
+                                    <div class="pf-node-icon">💡</div>
+                                    <div>Beleuchtung<br><small>Lighting</small></div>
+                                </div>
+                                <div class="pf-load-item" onclick="showPowerFlowDetail('loads')">
+                                    <div class="pf-node-icon">❄️</div>
+                                    <div>Klimaanlage<br><small>HVAC</small></div>
+                                </div>
+                                <div class="pf-load-item" onclick="showPowerFlowDetail('loads')">
+                                    <div class="pf-node-icon">🔌</div>
+                                    <div>Steckdosen<br><small>Outlets</small></div>
+                                </div>
+                                <div class="pf-load-item" onclick="showPowerFlowDetail('evcharger')">
+                                    <div class="pf-node-icon">🚗</div>
+                                    <div>Wallbox<br><small>EV Charger</small></div>
+                                </div>
+                                <div class="pf-load-item" onclick="showPowerFlowDetail('heatpump')">
+                                    <div class="pf-node-icon">🌡️</div>
+                                    <div>Wärmepumpe<br><small>Heat Pump</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Detail Panel -->
+            <div class="pf-detail-panel" id="pfDetailPanel">
+                <!-- Detail content will be inserted by JavaScript -->
+            </div>
+        </div>
+
+        <!-- FLASHCARDS SECTION -->
+        <div id="flashcards" class="section">
+            <h2><span class="sma-logo-box">SMA</span> Flashcard Training</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="flashcardCurrent">1</div>
+                    <div class="stat-label">Current Card</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="flashcardTotal">0</div>
+                    <div class="stat-label">Total Cards</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="flashcardKnown">0</div>
+                    <div class="stat-label">Marked Known</div>
+                </div>
+            </div>
+
+            <div class="flashcard-container">
+                <div class="flashcard" id="flashcard" onclick="flipFlashcard()">
+                    <div class="flashcard-front">
+                        <div class="flashcard-word" id="flashcardFront">Loading...</div>
+                        <div class="flashcard-hint">Tap to reveal translation</div>
+                    </div>
+                    <div class="flashcard-back">
+                        <div class="flashcard-word" id="flashcardBack">Loading...</div>
+                        <div class="flashcard-hint" id="flashcardContext"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flashcard-nav">
+                <button class="btn btn-secondary" onclick="prevFlashcard()">⬅️ Previous</button>
+                <button class="btn btn-primary" onclick="markKnown()">✓ I Know This</button>
+                <button class="btn btn-secondary" onclick="nextFlashcard()">Next ➡️</button>
+                <button class="btn btn-primary" onclick="shuffleFlashcards()">🔀 Shuffle</button>
+            </div>
+        </div>
+
+        <!-- QUIZ SECTION -->
+        <div id="quiz" class="section">
+            <h2><span class="sma-logo-box">SMA</span> Test Your Knowledge</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="quizProgress" style="width: 0%"></div>
+                </div>
+                
+                <div class="quiz-score">
+                    Score: <span id="quizScore">0</span> / <span id="quizTotal">0</span>
+                </div>
+
+                <div class="quiz-question" id="quizQuestion">Loading...</div>
+                <div class="quiz-hint" id="quizHint"></div>
+
+                <div class="quiz-options" id="quizOptions"></div>
+
+                <div class="quiz-feedback" id="quizFeedback"></div>
+
+                <button class="btn btn-primary" id="quizNextBtn" onclick="nextQuestion()" style="display: none;">
+                    Next Question ➡️
+                </button>
+
+                <button class="btn btn-primary" id="quizStartBtn" onclick="startQuiz()">
+                    Start Quiz 🚀
+                </button>
+
+                <div id="quizResults" style="display: none;">
+                    <h3 style="margin: 20px 0;">Quiz Complete! 🎉</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        You scored <strong id="finalScore">0</strong> out of <strong id="finalTotal">0</strong>
+                    </p>
+                    <button class="btn btn-primary" onclick="startQuiz()">Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAGRAMS SECTION -->
+        <div id="diagrams" class="section">
+            <h2><span class="sma-logo-box">SMA</span> System Components</h2>
+            
+            <div class="diagram-container">
+                <div class="diagram-title">🔆 SMA Photovoltaik-Anlage (PV System) - Click components to learn</div>
+                <div class="component-diagram">
+                    <div class="component-box" onclick="showComponent('panel')">
+                        <div class="component-icon">🔲</div>
+                        <div class="component-german">Solarmodul</div>
+                        <div class="component-english">Solar Panel</div>
+                    </div>
+                    <div class="component-box" onclick="showComponent('inverter')">
+                        <div class="component-icon">⚡</div>
+                        <div class="component-german">Wechselrichter</div>
+                        <div class="component-english">Inverter</div>
+                    </div>
+                    <div class="component-box" onclick="showComponent('battery')">
+                        <div class="component-icon">🔋</div>
+                        <div class="component-german">Batteriespeicher</div>
+                        <div class="component-english">Battery Storage</div>
+                    </div>
+                    <div class="component-box" onclick="showComponent('meter')">
+                        <div class="component-icon">📊</div>
+                        <div class="component-german">Stromzähler</div>
+                        <div class="component-english">Electric Meter</div>
+                    </div>
+                    <div class="component-box" onclick="showComponent('grid')">
+                        <div class="component-icon">🏭</div>
+                        <div class="component-german">Stromnetz</div>
+                        <div class="component-english">Power Grid</div>
+                    </div>
+                    <div class="component-box" onclick="showComponent('mounting')">
+                        <div class="component-icon">🔩</div>
+                        <div class="component-german">Montagesystem</div>
+                        <div class="component-english">Mounting System</div>
+                    </div>
+                </div>
+                <div class="component-detail" id="componentDetail"></div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">⚡ SMA Wechselrichter Typen (Inverter Types)</div>
+                <div class="component-diagram">
+                    <div class="component-box" onclick="showInverterType('string')">
+                        <div class="component-icon">📏</div>
+                        <div class="component-german">Sunny Tripower</div>
+                        <div class="component-english">String Inverter</div>
+                    </div>
+                    <div class="component-box" onclick="showInverterType('hybrid')">
+                        <div class="component-icon">🔄</div>
+                        <div class="component-german">Sunny Boy Storage</div>
+                        <div class="component-english">Battery Inverter</div>
+                    </div>
+                    <div class="component-box" onclick="showInverterType('homemanager')">
+                        <div class="component-icon">🏠</div>
+                        <div class="component-german">Sunny Home Manager</div>
+                        <div class="component-english">Energy Manager</div>
+                    </div>
+                </div>
+                <div class="component-detail" id="inverterDetail"></div>
+            </div>
+        </div>
+
+        <!-- INSTALLATION SECTION -->
+        <div id="installation" class="section">
+            <h2><span class="sma-logo-box">SMA</span> Installation Steps</h2>
+            
+            <div class="installation-steps">
+                <div class="step-card">
+                    <div class="step-german">Standortprüfung</div>
+                    <div class="step-english">Site Assessment</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Dachneigung (roof pitch), Ausrichtung (orientation), 
+                        Verschattung (shading), Tragfähigkeit (load capacity)
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">Montagesystem installieren</div>
+                    <div class="step-english">Install Mounting System</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Dachhaken (roof hooks), Montageschiene (mounting rail), 
+                        Modulklemme (module clamp)
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">Solarmodule montieren</div>
+                    <div class="step-english">Mount Solar Panels</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Modulrahmen (module frame), Anschlussdose (junction box), 
+                        MC4-Stecker (MC4 connector)
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">DC-Verkabelung</div>
+                    <div class="step-english">DC Wiring</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Gleichstrom (DC), Solarkabel (solar cable), 
+                        String (string), Leerlaufspannung (Voc)
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">SMA Wechselrichter montieren</div>
+                    <div class="step-english">Mount SMA Inverter</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Wandhalterung (wall bracket), Belüftung (ventilation), 
+                        DC-Eingang (DC input), Sunny Tripower
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">AC-Anschluss</div>
+                    <div class="step-english">AC Connection</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Wechselstrom (AC), Sicherungskasten (fuse box), 
+                        FI-Schalter (RCD)
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">SMA Sunny Portal einrichten</div>
+                    <div class="step-english">Setup SMA Sunny Portal</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Datenlogger (data logger), Speedwire, 
+                        Anlagenüberwachung (system monitoring)
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-german">Inbetriebnahme</div>
+                    <div class="step-english">Commissioning</div>
+                    <div class="step-detail">
+                        <strong>Key terms:</strong> Isolationsprüfung (insulation test), 
+                        Funktionsprüfung (functional test), Protokoll (report)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAFETY SECTION -->
+        <div id="safety" class="section">
+            <h2><span class="sma-logo-box">SMA</span> Safety Terms</h2>
+            
+            <div class="safety-grid">
+                <div class="safety-card">
+                    <div class="vocab-german">⚡ Achtung! Hochspannung!</div>
+                    <div class="vocab-english" style="display: block;">Warning! High Voltage!</div>
+                    <div class="vocab-context" style="display: block;">Always displayed on SMA inverters and DC junction boxes</div>
+                </div>
+                
+                <div class="safety-card">
+                    <div class="vocab-german">🔌 Freischalten</div>
+                    <div class="vocab-english" style="display: block;">Disconnect / Isolate</div>
+                    <div class="vocab-context" style="display: block;">Essential safety step before any work on SMA equipment</div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="vocab-german">🧤 Persönliche Schutzausrüstung (PSA)</div>
+                    <div class="vocab-english" style="display: block;">Personal Protective Equipment (PPE)</div>
+                    <div class="vocab-context" style="display: block;">Schutzhandschuhe, Schutzbrille, Sicherheitsschuhe</div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="vocab-german">🚫 Berührungsschutz</div>
+                    <div class="vocab-english" style="display: block;">Touch Protection</div>
+                    <div class="vocab-context" style="display: block;">Protection against accidental contact with live parts</div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="vocab-german">🌡️ Brandgefahr</div>
+                    <div class="vocab-english" style="display: block;">Fire Hazard</div>
+                    <div class="vocab-context" style="display: block;">Risk from DC arcs, poor connections, or overheating</div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="vocab-german">⬇️ Absturzgefahr</div>
+                    <div class="vocab-english" style="display: block;">Fall Hazard</div>
+                    <div class="vocab-context" style="display: block;">Working on roofs requires Absturzsicherung (fall protection)</div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="vocab-german">☀️ Solarmodule stehen unter Spannung bei Licht!</div>
+                    <div class="vocab-english" style="display: block;">Solar panels are energized when exposed to light!</div>
+                    <div class="vocab-context" style="display: block;">Cannot be fully switched off during daylight</div>
+                </div>
+
+                <div class="safety-card">
+                    <div class="vocab-german">🔥 Lichtbogen</div>
+                    <div class="vocab-english" style="display: block;">Arc / Arc Flash</div>
+                    <div class="vocab-context" style="display: block;">DC arcs don't self-extinguish like AC - SMA AFCI protection</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOOLS SECTION -->
+        <div id="tools" class="section">
+            <h2><span class="sma-logo-box">SMA</span> Tools & Equipment</h2>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔧</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Schraubendreher</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Screwdriver</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔩</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Inbusschlüssel</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Allen Key / Hex Key</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔌</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Crimpzange</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Crimping Tool</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">✂️</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Abisolierzange</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Wire Stripper</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📏</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Multimeter</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Multimeter</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">⚡</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Spannungsprüfer</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Voltage Tester</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Isolationsmessgerät</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Insulation Tester</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📐</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Wasserwaage</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Spirit Level</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔨</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Akkuschrauber</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Cordless Drill</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🪜</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Leiter / Gerüst</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Ladder / Scaffolding</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🧰</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">MC4-Montagewerkzeug</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">MC4 Assembly Tool</div>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🌡️</div>
+                    <div class="tool-info">
+                        <div class="vocab-german">Wärmebildkamera</div>
+                        <div class="vocab-english" style="display: block; color: var(--secondary);">Thermal Imaging Camera</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sma-footer">
+        <p>Powered by <span class="sma-logo-box" style="font-size: 0.7rem; padding: 2px 5px;">SMA</span> Solar Technology</p>
+        <p>© 2026 SMA Solar Academy Training App | <a href="https://www.sma.de" target="_blank">www.sma.de</a></p>
+    </div>
+
+    <script>
+        // Comprehensive vocabulary database with SMA products
+        const vocabulary = [
+            // Electrical Terms
+            { german: "Gleichstrom (DC)", english: "Direct Current (DC)", pronunciation: "GLYKH-shtrom", category: "electrical", context: "Type of current from solar panels" },
+            { german: "Wechselstrom (AC)", english: "Alternating Current (AC)", pronunciation: "VEKH-sel-shtrom", category: "electrical", context: "Type of current for home appliances" },
+            { german: "Spannung", english: "Voltage", pronunciation: "SHPAN-noong", category: "electrical", context: "Measured in Volt (V)" },
+            { german: "Stromstärke", english: "Current / Amperage", pronunciation: "SHTROM-shter-ke", category: "electrical", context: "Measured in Ampere (A)" },
+            { german: "Leistung", english: "Power", pronunciation: "LYS-toong", category: "electrical", context: "Measured in Watt (W) or Kilowatt (kW)" },
+            { german: "Energie", english: "Energy", pronunciation: "e-ner-GEE", category: "electrical", context: "Measured in Kilowattstunde (kWh)" },
+            { german: "Wirkungsgrad", english: "Efficiency", pronunciation: "VIR-koongs-graht", category: "electrical", context: "Percentage of energy converted" },
+            { german: "Leerlaufspannung", english: "Open Circuit Voltage (Voc)", pronunciation: "LEER-lowf-shpan-noong", category: "electrical", context: "Voltage when no load connected" },
+            { german: "Kurzschlussstrom", english: "Short Circuit Current (Isc)", pronunciation: "KOORTS-shloos-shtrom", category: "electrical", context: "Maximum current when shorted" },
+            { german: "MPP / Maximum Power Point", english: "Maximum Power Point", pronunciation: "em-pey-pey", category: "electrical", context: "Optimal operating point for max power" },
+            { german: "Erdung", english: "Grounding / Earthing", pronunciation: "ER-doong", category: "electrical", context: "Safety connection to earth" },
+            { german: "Potentialausgleich", english: "Equipotential Bonding", pronunciation: "po-ten-tsee-AHL-ows-glykh", category: "electrical", context: "Connecting metal parts to same potential" },
+            { german: "Isolationswiderstand", english: "Insulation Resistance", pronunciation: "ee-zo-la-tsee-OHNS-vee-der-shtant", category: "electrical", context: "Resistance between conductors and ground" },
+            { german: "Nennleistung", english: "Rated Power / Nominal Power", pronunciation: "NEN-lys-toong", category: "electrical", context: "Power output under standard conditions" },
+            { german: "Einspeisung", english: "Feed-in / Grid Injection", pronunciation: "INE-shpy-zoong", category: "electrical", context: "Sending power to the grid" },
+            { german: "Eigenverbrauch", english: "Self-consumption", pronunciation: "EYE-gen-fer-browkh", category: "electrical", context: "Using your own solar power" },
+            { german: "Widerstand", english: "Resistance", pronunciation: "VEE-der-shtant", category: "electrical", context: "Opposition to current flow, measured in Ohm" },
+            { german: "Frequenz", english: "Frequency", pronunciation: "fre-KVENTS", category: "electrical", context: "50 Hz in Europe, 60 Hz in USA" },
+            { german: "Phase", english: "Phase", pronunciation: "FAH-ze", category: "electrical", context: "Single-phase or three-phase power" },
+            { german: "Blindleistung", english: "Reactive Power", pronunciation: "BLINT-lys-toong", category: "electrical", context: "Power that oscillates, measured in VAr" },
+            
+            // SMA Products
+            { german: "Sunny Tripower", english: "SMA String Inverter", pronunciation: "sunny TRY-power", category: "sma", context: "SMA's flagship three-phase string inverter for commercial and residential" },
+            { german: "Sunny Boy", english: "SMA Single-Phase Inverter", pronunciation: "sunny boy", category: "sma", context: "SMA's single-phase inverter for residential systems" },
+            { german: "Sunny Boy Storage", english: "SMA Battery Inverter", pronunciation: "sunny boy STORAGE", category: "sma", context: "SMA's battery inverter for energy storage systems" },
+            { german: "Sunny Home Manager", english: "SMA Energy Manager", pronunciation: "sunny HOME manager", category: "sma", context: "Intelligent energy management for optimizing self-consumption" },
+            { german: "Sunny Portal", english: "SMA Monitoring Platform", pronunciation: "sunny POR-tal", category: "sma", context: "Cloud-based monitoring and analysis platform" },
+            { german: "SMA Energy App", english: "SMA Mobile App", pronunciation: "SMA energy app", category: "sma", context: "Mobile app for monitoring your SMA system" },
+            { german: "Data Manager M", english: "SMA Data Logger", pronunciation: "data manager em", category: "sma", context: "Communication gateway for system monitoring" },
+            { german: "Speedwire", english: "SMA Communication Protocol", pronunciation: "SPEED-wire", category: "sma", context: "SMA's high-speed communication protocol" },
+            { german: "SMA Smart Connected", english: "SMA Remote Service", pronunciation: "smart connected", category: "sma", context: "Proactive monitoring and automatic fault detection" },
+            { german: "Sunny Island", english: "SMA Off-Grid Inverter", pronunciation: "sunny EYE-land", category: "sma", context: "Battery-based inverter for off-grid and backup systems" },
+            
+            // Components
+            { german: "Wechselrichter", english: "Inverter", pronunciation: "VEKH-sel-rikh-ter", category: "components", context: "Converts DC from panels to AC for home/grid use" },
+            { german: "Solarmodul / Photovoltaikmodul", english: "Solar Panel / PV Module", pronunciation: "zo-LAR-mo-dool", category: "components", context: "Converts sunlight into DC electricity" },
+            { german: "Batteriespeicher", english: "Battery Storage", pronunciation: "ba-te-REE-shpy-kher", category: "components", context: "Stores excess energy for later use" },
+            { german: "Stromzähler", english: "Electric Meter", pronunciation: "SHTROM-tsey-ler", category: "components", context: "Measures electricity consumption/production" },
+            { german: "Anschlussdose", english: "Junction Box", pronunciation: "AN-shloos-doh-ze", category: "components", context: "Connection point on back of solar panel" },
+            { german: "Montagesystem", english: "Mounting System", pronunciation: "mon-TAH-ge-zys-tem", category: "components", context: "Rails and hardware to secure panels" },
+            { german: "Dachhaken", english: "Roof Hook", pronunciation: "DAKH-hah-ken", category: "components", context: "Anchors mounting system to roof structure" },
+            { german: "Montageschiene", english: "Mounting Rail", pronunciation: "mon-TAH-ge-shee-ne", category: "components", context: "Rail that panels attach to" },
+            { german: "Modulklemme", english: "Module Clamp", pronunciation: "mo-DOOL-klem-me", category: "components", context: "Secures panels to mounting rails" },
+            { german: "MC4-Stecker", english: "MC4 Connector", pronunciation: "em-tsey-feer SHTEK-ker", category: "components", context: "Standard solar panel connector" },
+            { german: "Solarkabel", english: "Solar Cable", pronunciation: "zo-LAR-kah-bel", category: "components", context: "UV-resistant DC cable for PV systems" },
+            { german: "Überspannungsschutz", english: "Surge Protector", pronunciation: "oo-ber-SHPAN-noongs-shoots", category: "components", context: "Protects against lightning/voltage spikes" },
+            { german: "DC-Trennschalter", english: "DC Disconnect Switch", pronunciation: "day-tsey TREN-shal-ter", category: "components", context: "Isolates DC side for safety" },
+            { german: "Einspeisezähler", english: "Feed-in Meter", pronunciation: "INE-shpy-ze-tsey-ler", category: "components", context: "Measures electricity fed to grid" },
+            { german: "MPP-Tracker", english: "MPPT Controller", pronunciation: "em-pey-pey TRACKER", category: "components", context: "Optimizes power extraction from panels" },
+            { german: "Datenlogger", english: "Data Logger", pronunciation: "DAH-ten-logger", category: "components", context: "Records and transmits system data" },
+            
+            // Installation Terms
+            { german: "Inbetriebnahme", english: "Commissioning", pronunciation: "in-be-TREEP-nah-me", category: "installation", context: "Starting up and testing the system" },
+            { german: "Freischalten", english: "Disconnect / Isolate", pronunciation: "FRY-shal-ten", category: "installation", context: "Making system safe for work" },
+            { german: "Anschließen", english: "Connect", pronunciation: "AN-shlee-sen", category: "installation", context: "Making electrical connections" },
+            { german: "Verkabelung", english: "Wiring / Cabling", pronunciation: "fer-KAH-be-loong", category: "installation", context: "All cable connections in system" },
+            { german: "String", english: "String (series of panels)", pronunciation: "string", category: "installation", context: "Panels connected in series" },
+            { german: "Parallelschaltung", english: "Parallel Connection", pronunciation: "pa-ra-LEL-shal-toong", category: "installation", context: "Connecting strings in parallel" },
+            { german: "Reihenschaltung", english: "Series Connection", pronunciation: "RY-en-shal-toong", category: "installation", context: "Connecting panels in series" },
+            { german: "Dachneigung", english: "Roof Pitch / Tilt Angle", pronunciation: "DAKH-ny-goong", category: "installation", context: "Angle of roof from horizontal" },
+            { german: "Ausrichtung", english: "Orientation / Azimuth", pronunciation: "OWS-rikh-toong", category: "installation", context: "Direction panels face (South ideal)" },
+            { german: "Verschattung", english: "Shading", pronunciation: "fer-SHA-toong", category: "installation", context: "Shadows reducing panel output" },
+            { german: "Kabelquerschnitt", english: "Cable Cross-section", pronunciation: "KAH-bel-kroy-tshnit", category: "installation", context: "Cable thickness in mm²" },
+            { german: "Zugentlastung", english: "Strain Relief", pronunciation: "TSOOK-ent-las-toong", category: "installation", context: "Preventing cable stress at connections" },
+            { german: "Abnahme", english: "Acceptance / Inspection", pronunciation: "AP-nah-me", category: "installation", context: "Final inspection and approval" },
+            { german: "Wartung", english: "Maintenance", pronunciation: "VAR-toong", category: "installation", context: "Regular system upkeep" },
+            
+            // Measurements
+            { german: "Volt (V)", english: "Volt (V)", pronunciation: "folt", category: "measurements", context: "Unit of voltage" },
+            { german: "Ampere (A)", english: "Ampere (A)", pronunciation: "am-PEHR", category: "measurements", context: "Unit of current" },
+            { german: "Watt (W)", english: "Watt (W)", pronunciation: "vat", category: "measurements", context: "Unit of power" },
+            { german: "Kilowatt (kW)", english: "Kilowatt (kW)", pronunciation: "KEE-lo-vat", category: "measurements", context: "1000 Watts" },
+            { german: "Kilowattstunde (kWh)", english: "Kilowatt-hour (kWh)", pronunciation: "KEE-lo-vat-shtoon-de", category: "measurements", context: "Unit of energy" },
+            { german: "Kilowattpeak (kWp)", english: "Kilowatt-peak (kWp)", pronunciation: "KEE-lo-vat-peek", category: "measurements", context: "Peak power under standard conditions" },
+            { german: "Ohm (Ω)", english: "Ohm (Ω)", pronunciation: "ohm", category: "measurements", context: "Unit of resistance" },
+            { german: "Megaohm (MΩ)", english: "Megaohm (MΩ)", pronunciation: "MEH-ga-ohm", category: "measurements", context: "Unit for insulation resistance" },
+            
+            // Safety Terms
+            { german: "Sicherheitsabstand", english: "Safety Distance", pronunciation: "ZI-kher-hyts-ap-shtant", category: "safety", context: "Required clearance from hazards" },
+            { german: "Schutzklasse", english: "Protection Class", pronunciation: "SHOOTS-kla-se", category: "safety", context: "IP rating for enclosures" },
+            { german: "FI-Schalter / RCD", english: "Residual Current Device (RCD)", pronunciation: "ef-ee SHAL-ter", category: "safety", context: "Protects against electric shock" },
+            { german: "Leitungsschutzschalter", english: "Circuit Breaker (MCB)", pronunciation: "LY-toongs-shoots-shal-ter", category: "safety", context: "Protects against overcurrent" },
+            { german: "Sicherung", english: "Fuse", pronunciation: "ZI-khe-roong", category: "safety", context: "Overcurrent protection device" },
+            { german: "Blitzschutz", english: "Lightning Protection", pronunciation: "BLITS-shoots", category: "safety", context: "System to protect from lightning" },
+            { german: "Brandschutz", english: "Fire Protection", pronunciation: "BRANT-shoots", category: "safety", context: "Fire safety measures" },
+            { german: "Arbeitsschutz", english: "Occupational Safety", pronunciation: "AR-byts-shoots", category: "safety", context: "Worker safety regulations" },
+            { german: "Absturzsicherung", english: "Fall Protection", pronunciation: "AP-shtoorts-zi-khe-roong", category: "safety", context: "Equipment to prevent falls" },
+            { german: "Gefahr", english: "Danger", pronunciation: "ge-FAR", category: "safety", context: "Warning of hazard" },
+            { german: "Warnung", english: "Warning", pronunciation: "VAR-noong", category: "safety", context: "Caution notice" },
+            { german: "Verboten", english: "Forbidden / Prohibited", pronunciation: "fer-BOH-ten", category: "safety", context: "Not allowed" },
+        ];
+
+        // Power Flow Details - SMA Specific
+        const powerFlowDetails = {
+            sun: {
+                title: "☀️ Sonnenlicht (Sunlight)",
+                sections: [
+                    {
+                        title: "Physik (Physics)",
+                        terms: [
+                            { de: "Sonneneinstrahlung", en: "Solar Irradiance" },
+                            { de: "Photonen", en: "Photons" },
+                            { de: "Globalstrahlung", en: "Global Radiation" },
+                            { de: "Diffusstrahlung", en: "Diffuse Radiation" }
+                        ]
+                    },
+                    {
+                        title: "Messwerte (Measurements)",
+                        terms: [
+                            { de: "W/m² (Watt pro Quadratmeter)", en: "W/m²" },
+                            { de: "Sonnenstunden", en: "Sun Hours" },
+                            { de: "Einstrahlungsstärke", en: "Irradiance Level" }
+                        ]
+                    }
+                ]
+            },
+            panels: {
+                title: "🔲 Solarmodule (Solar Panels)",
+                sections: [
+                    {
+                        title: "Komponenten (Components)",
+                        terms: [
+                            { de: "Solarzelle", en: "Solar Cell" },
+                            { de: "Modulrahmen", en: "Module Frame" },
+                            { de: "Frontglas", en: "Front Glass" },
+                            { de: "Bypass-Diode", en: "Bypass Diode" }
+                        ]
+                    },
+                    {
+                        title: "Elektrische Werte (Electrical)",
+                        terms: [
+                            { de: "Leerlaufspannung (Voc)", en: "Open Circuit Voltage" },
+                            { de: "Kurzschlussstrom (Isc)", en: "Short Circuit Current" },
+                            { de: "Nennleistung (Wp)", en: "Rated Power" },
+                            { de: "MPP-Spannung (Vmpp)", en: "MPP Voltage" }
+                        ]
+                    }
+                ]
+            },
+            junction: {
+                title: "📦 Generatoranschlusskasten (DC Junction Box)",
+                sections: [
+                    {
+                        title: "Komponenten (Components)",
+                        terms: [
+                            { de: "String-Sicherung", en: "String Fuse" },
+                            { de: "Überspannungsableiter", en: "Surge Arrester" },
+                            { de: "DC-Trennstelle", en: "DC Disconnect Point" },
+                            { de: "Anschlussklemmen", en: "Terminal Blocks" }
+                        ]
+                    },
+                    {
+                        title: "Funktion (Function)",
+                        terms: [
+                            { de: "String-Zusammenführung", en: "String Combining" },
+                            { de: "Überstromschutz", en: "Overcurrent Protection" },
+                            { de: "Blitzschutz", en: "Lightning Protection" }
+                        ]
+                    }
+                ]
+            },
+            dcdisconnect: {
+                title: "🔌 DC-Freischalter (DC Disconnect)",
+                sections: [
+                    {
+                        title: "Sicherheit (Safety)",
+                        terms: [
+                            { de: "Lasttrennschalter", en: "Load Break Switch" },
+                            { de: "Freischaltung", en: "Isolation" },
+                            { de: "Lichtbogenlöschung", en: "Arc Extinguishing" }
+                        ]
+                    },
+                    {
+                        title: "Spezifikationen (Specs)",
+                        terms: [
+                            { de: "Nennspannung DC", en: "Rated DC Voltage" },
+                            { de: "Nennstrom", en: "Rated Current" },
+                            { de: "Schutzart (IP)", en: "Protection Rating" }
+                        ]
+                    }
+                ]
+            },
+            mppt: {
+                title: "📈 MPP-Tracker (MPPT Controller)",
+                sections: [
+                    {
+                        title: "SMA MPP-Tracking",
+                        terms: [
+                            { de: "Maximum Power Point Tracking", en: "MPPT Algorithm" },
+                            { de: "OptiTrac Global Peak", en: "SMA Shade Management" },
+                            { de: "MPP-Spannungsbereich", en: "MPP Voltage Range" },
+                            { de: "Anzahl MPP-Tracker", en: "Number of MPPT Inputs" }
+                        ]
+                    },
+                    {
+                        title: "Funktion (Function)",
+                        terms: [
+                            { de: "Leistungsoptimierung", en: "Power Optimization" },
+                            { de: "Verschattungserkennung", en: "Shade Detection" },
+                            { de: "String-Überwachung", en: "String Monitoring" }
+                        ]
+                    }
+                ]
+            },
+            inverter: {
+                title: "⚡ SMA Wechselrichter (SMA Inverter)",
+                sections: [
+                    {
+                        title: "SMA Sunny Tripower",
+                        terms: [
+                            { de: "DC/AC-Wandlung", en: "DC/AC Conversion" },
+                            { de: "Dreiphasig", en: "Three-Phase" },
+                            { de: "Wirkungsgrad >98%", en: "Efficiency >98%" },
+                            { de: "SMA Smart Connected", en: "Remote Monitoring" }
+                        ]
+                    },
+                    {
+                        title: "Anschlüsse (Connections)",
+                        terms: [
+                            { de: "DC-Eingang", en: "DC Input" },
+                            { de: "AC-Ausgang", en: "AC Output" },
+                            { de: "Speedwire-Anschluss", en: "Speedwire Port" },
+                            { de: "WLAN-Schnittstelle", en: "WiFi Interface" }
+                        ]
+                    },
+                    {
+                        title: "Schutzfunktionen (Protection)",
+                        terms: [
+                            { de: "Überspannungsschutz", en: "Overvoltage Protection" },
+                            { de: "Erdschlussüberwachung", en: "Ground Fault Monitoring" },
+                            { de: "AFCI Lichtbogenerkennung", en: "Arc Fault Detection" }
+                        ]
+                    }
+                ]
+            },
+            acoutput: {
+                title: "🔌 AC-Ausgang (AC Output)",
+                sections: [
+                    {
+                        title: "Elektrische Werte (Electrical)",
+                        terms: [
+                            { de: "Netzspannung 230V/400V", en: "Grid Voltage" },
+                            { de: "Netzfrequenz 50Hz", en: "Grid Frequency" },
+                            { de: "Nennleistung AC", en: "Rated AC Power" },
+                            { de: "Leistungsfaktor (cos φ)", en: "Power Factor" }
+                        ]
+                    }
+                ]
+            },
+            distribution: {
+                title: "🔲 Verteilerkasten (Distribution Panel)",
+                sections: [
+                    {
+                        title: "Komponenten (Components)",
+                        terms: [
+                            { de: "Sammelschiene", en: "Busbar" },
+                            { de: "Leitungsschutzschalter", en: "Circuit Breaker (MCB)" },
+                            { de: "FI-Schalter (RCD)", en: "Residual Current Device" },
+                            { de: "Überspannungsableiter", en: "Surge Arrester" }
+                        ]
+                    },
+                    {
+                        title: "Anschlüsse (Connections)",
+                        terms: [
+                            { de: "Neutralleiter (N)", en: "Neutral Conductor" },
+                            { de: "Schutzleiter (PE)", en: "Protective Earth" },
+                            { de: "Phasen (L1, L2, L3)", en: "Phases" }
+                        ]
+                    }
+                ]
+            },
+            meter: {
+                title: "📊 SMA Energy Meter",
+                sections: [
+                    {
+                        title: "SMA Energy Meter",
+                        terms: [
+                            { de: "Zweirichtungszähler", en: "Bidirectional Meter" },
+                            { de: "Modbus-Kommunikation", en: "Modbus Communication" },
+                            { de: "Echtzeit-Messung", en: "Real-time Measurement" }
+                        ]
+                    },
+                    {
+                        title: "Messwerte (Measurements)",
+                        terms: [
+                            { de: "Bezug (Import)", en: "Grid Import" },
+                            { de: "Einspeisung (Export)", en: "Grid Export" },
+                            { de: "Eigenverbrauch", en: "Self-consumption" },
+                            { de: "Momentanleistung", en: "Instantaneous Power" }
+                        ]
+                    }
+                ]
+            },
+            grid: {
+                title: "🏭 Stromnetz (Power Grid)",
+                sections: [
+                    {
+                        title: "Netzanschluss (Grid Connection)",
+                        terms: [
+                            { de: "Netzanschlusspunkt", en: "Point of Connection" },
+                            { de: "Netzbetreiber", en: "Grid Operator" },
+                            { de: "Netzspannung", en: "Grid Voltage" },
+                            { de: "Netzfrequenz (50 Hz)", en: "Grid Frequency" }
+                        ]
+                    },
+                    {
+                        title: "Vergütung (Compensation)",
+                        terms: [
+                            { de: "Einspeisevergütung", en: "Feed-in Tariff" },
+                            { de: "Netzparität", en: "Grid Parity" }
+                        ]
+                    }
+                ]
+            },
+            batteryinverter: {
+                title: "🔄 SMA Sunny Boy Storage",
+                sections: [
+                    {
+                        title: "SMA Batteriewechselrichter",
+                        terms: [
+                            { de: "AC-gekoppelt", en: "AC-Coupled" },
+                            { de: "Bidirektional", en: "Bidirectional" },
+                            { de: "Notstromfunktion", en: "Backup Power Function" },
+                            { de: "Secure Power Supply", en: "SPS Emergency Outlet" }
+                        ]
+                    },
+                    {
+                        title: "Betriebsmodi (Operating Modes)",
+                        terms: [
+                            { de: "Laden", en: "Charging" },
+                            { de: "Entladen", en: "Discharging" },
+                            { de: "Standby", en: "Standby" }
+                        ]
+                    }
+                ]
+            },
+            bms: {
+                title: "🖥️ BMS - Batteriemanagementsystem",
+                sections: [
+                    {
+                        title: "Funktionen (Functions)",
+                        terms: [
+                            { de: "Ladezustand (SOC)", en: "State of Charge" },
+                            { de: "Zellenausgleich", en: "Cell Balancing" },
+                            { de: "Temperaturüberwachung", en: "Temperature Monitoring" }
+                        ]
+                    },
+                    {
+                        title: "Schutz (Protection)",
+                        terms: [
+                            { de: "Überladeschutz", en: "Overcharge Protection" },
+                            { de: "Tiefentladeschutz", en: "Deep Discharge Protection" },
+                            { de: "Kurzschlussschutz", en: "Short Circuit Protection" }
+                        ]
+                    }
+                ]
+            },
+            battery: {
+                title: "🔋 Batteriespeicher (Battery Storage)",
+                sections: [
+                    {
+                        title: "Technologie (Technology)",
+                        terms: [
+                            { de: "Lithium-Ionen (Li-Ion)", en: "Lithium-Ion" },
+                            { de: "Lithium-Eisenphosphat (LFP)", en: "LiFePO4" }
+                        ]
+                    },
+                    {
+                        title: "Kennwerte (Specifications)",
+                        terms: [
+                            { de: "Speicherkapazität (kWh)", en: "Storage Capacity" },
+                            { de: "Entladetiefe (DoD)", en: "Depth of Discharge" },
+                            { de: "Zyklenlebensdauer", en: "Cycle Life" },
+                            { de: "Wirkungsgrad", en: "Round-trip Efficiency" }
+                        ]
+                    }
+                ]
+            },
+            datamanager: {
+                title: "📡 SMA Data Manager M",
+                sections: [
+                    {
+                        title: "SMA Datenlogger",
+                        terms: [
+                            { de: "Anlagenüberwachung", en: "System Monitoring" },
+                            { de: "Datenerfassung", en: "Data Acquisition" },
+                            { de: "Fernwartung", en: "Remote Maintenance" },
+                            { de: "Firmware-Update", en: "Firmware Update" }
+                        ]
+                    },
+                    {
+                        title: "Kommunikation (Communication)",
+                        terms: [
+                            { de: "Speedwire", en: "SMA Speedwire" },
+                            { de: "Modbus TCP/IP", en: "Modbus Protocol" },
+                            { de: "Ethernet/LAN", en: "Network Connection" },
+                            { de: "RS485", en: "Serial Interface" }
+                        ]
+                    }
+                ]
+            },
+            portal: {
+                title: "☁️ SMA Sunny Portal",
+                sections: [
+                    {
+                        title: "Cloud-Monitoring",
+                        terms: [
+                            { de: "Anlagenübersicht", en: "System Overview" },
+                            { de: "Ertragsanalyse", en: "Yield Analysis" },
+                            { de: "Fehlermeldungen", en: "Error Messages" },
+                            { de: "Vergleichsanalyse", en: "Comparative Analysis" }
+                        ]
+                    },
+                    {
+                        title: "Funktionen (Features)",
+                        terms: [
+                            { de: "Live-Daten", en: "Live Data" },
+                            { de: "Historische Daten", en: "Historical Data" },
+                            { de: "Berichtserstellung", en: "Report Generation" },
+                            { de: "Alarmierung", en: "Alerting" }
+                        ]
+                    }
+                ]
+            },
+            app: {
+                title: "📱 SMA Energy App",
+                sections: [
+                    {
+                        title: "Mobile Überwachung",
+                        terms: [
+                            { de: "Echtzeit-Anzeige", en: "Real-time Display" },
+                            { de: "Energiefluss", en: "Energy Flow" },
+                            { de: "Push-Benachrichtigungen", en: "Push Notifications" }
+                        ]
+                    },
+                    {
+                        title: "Steuerung (Control)",
+                        terms: [
+                            { de: "Ladesteuerung", en: "Charge Control" },
+                            { de: "Verbrauchsoptimierung", en: "Consumption Optimization" }
+                        ]
+                    }
+                ]
+            },
+            loads: {
+                title: "🏠 Verbraucher (Home Loads)",
+                sections: [
+                    {
+                        title: "Lasttypen (Load Types)",
+                        terms: [
+                            { de: "Grundlast", en: "Base Load" },
+                            { de: "Spitzenlast", en: "Peak Load" },
+                            { de: "Steuerbare Last", en: "Controllable Load" }
+                        ]
+                    },
+                    {
+                        title: "Verbraucher (Consumers)",
+                        terms: [
+                            { de: "Haushaltsgeräte", en: "Household Appliances" },
+                            { de: "Beleuchtung", en: "Lighting" },
+                            { de: "Klimaanlage", en: "Air Conditioning" }
+                        ]
+                    }
+                ]
+            },
+            evcharger: {
+                title: "🚗 Wallbox (EV Charger)",
+                sections: [
+                    {
+                        title: "SMA EV Charger",
+                        terms: [
+                            { de: "Ladestation", en: "Charging Station" },
+                            { de: "Ladeleistung (kW)", en: "Charging Power" },
+                            { de: "Überschussladen", en: "Surplus Charging" }
+                        ]
+                    }
+                ]
+            },
+            heatpump: {
+                title: "🌡️ Wärmepumpe (Heat Pump)",
+                sections: [
+                    {
+                        title: "Integration",
+                        terms: [
+                            { de: "SG-Ready", en: "Smart Grid Ready" },
+                            { de: "Wärmeerzeuger", en: "Heat Generator" },
+                            { de: "COP (Leistungszahl)", en: "Coefficient of Performance" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Component details
+        const componentDetails = {
+            panel: {
+                title: "Solarmodul (Solar Panel)",
+                description: "Converts sunlight directly into DC electricity using photovoltaic cells.",
+                terms: [
+                    "Solarzelle (Solar Cell) - Individual cell that generates electricity",
+                    "Modulrahmen (Module Frame) - Aluminum frame protecting the panel",
+                    "Frontglas (Front Glass) - Tempered glass protecting cells",
+                    "Bypass-Diode (Bypass Diode) - Prevents hotspots from shading"
+                ]
+            },
+            inverter: {
+                title: "SMA Wechselrichter (SMA Inverter)",
+                description: "Converts DC electricity from panels to AC for home use or grid feed-in.",
+                terms: [
+                    "DC-Eingang (DC Input) - Where panel cables connect",
+                    "AC-Ausgang (AC Output) - Connection to home/grid",
+                    "MPP-Tracker (MPP Tracker) - Optimizes power extraction",
+                    "Speedwire - SMA high-speed communication"
+                ]
+            },
+            battery: {
+                title: "Batteriespeicher (Battery Storage)",
+                description: "Stores excess solar energy for use when sun isn't shining.",
+                terms: [
+                    "SMA Sunny Boy Storage - Battery inverter",
+                    "Speicherkapazität (Storage Capacity) - Energy in kWh",
+                    "Entladetiefe (Depth of Discharge) - Usable capacity",
+                    "BMS (Battery Management System) - Controls charging"
+                ]
+            },
+            meter: {
+                title: "SMA Energy Meter",
+                description: "Measures electricity flow in both directions.",
+                terms: [
+                    "Zweirichtungszähler (Bidirectional Meter) - Measures import/export",
+                    "Modbus-Kommunikation - Data protocol",
+                    "Bezug (Import) - Electricity from grid",
+                    "Einspeisung (Export) - Electricity to grid"
+                ]
+            },
+            grid: {
+                title: "Stromnetz (Power Grid)",
+                description: "Public electricity network for power distribution.",
+                terms: [
+                    "Netzbetreiber (Grid Operator) - Company managing grid",
+                    "Netzanschluss (Grid Connection) - Connection point",
+                    "Einspeisevergütung (Feed-in Tariff) - Payment for exported power",
+                    "Netzfrequenz (Grid Frequency) - 50 Hz in Europe"
+                ]
+            },
+            mounting: {
+                title: "Montagesystem (Mounting System)",
+                description: "Hardware to securely attach panels to roof or ground.",
+                terms: [
+                    "Aufdachmontage (Roof-mounted) - On top of roof tiles",
+                    "Indachmontage (In-roof) - Integrated into roof",
+                    "Flachdachmontage (Flat roof) - Angled frames on flat roof",
+                    "Freilandanlage (Ground-mounted) - On ground frames"
+                ]
+            }
+        };
+
+        const inverterTypes = {
+            string: {
+                title: "SMA Sunny Tripower",
+                description: "SMA's flagship three-phase string inverter for residential and commercial systems.",
+                pros: "High efficiency >98%, multiple MPP trackers, SMA Smart Connected",
+                cons: "Requires proper string design, single point of conversion"
+            },
+            hybrid: {
+                title: "SMA Sunny Boy Storage",
+                description: "SMA's AC-coupled battery inverter for energy storage systems.",
+                pros: "Flexible retrofit, backup power capability, works with any PV inverter",
+                cons: "Additional conversion losses in AC-coupling"
+            },
+            homemanager: {
+                title: "SMA Sunny Home Manager 2.0",
+                description: "Intelligent energy management system for optimizing self-consumption.",
+                pros: "Automatic load control, forecast-based optimization, EV charging integration",
+                cons: "Requires compatible devices for full functionality"
+            }
+        };
+
+        // State
+        let currentCategory = 'electrical';
+        let flashcardIndex = 0;
+        let flashcardDeck = [...vocabulary];
+        let knownCards = new Set();
+        let quizQuestions = [];
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderVocabulary();
+            initFlashcards();
+        });
+
+        // Section Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Vocabulary Functions
+        function renderVocabulary() {
+            const grid = document.getElementById('vocabGrid');
+            const filtered = currentCategory === 'all' 
+                ? vocabulary 
+                : vocabulary.filter(v => v.category === currentCategory);
+            
+            grid.innerHTML = filtered.map((v, i) => `
+                <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+                    <div class="vocab-german">${v.german}</div>
+                    <div class="vocab-pronunciation">[${v.pronunciation}]</div>
+                    <div class="vocab-english">${v.english}</div>
+                    <div class="vocab-context">💡 ${v.context}</div>
+                    <div class="tap-hint">Tap to reveal</div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderVocabulary();
+        }
+
+        function filterVocab(searchTerm) {
+            const grid = document.getElementById('vocabGrid');
+            const term = searchTerm.toLowerCase();
+            const filtered = vocabulary.filter(v => 
+                v.german.toLowerCase().includes(term) || 
+                v.english.toLowerCase().includes(term) ||
+                v.context.toLowerCase().includes(term)
+            );
+            
+            grid.innerHTML = filtered.map(v => `
+                <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+                    <div class="vocab-german">${v.german}</div>
+                    <div class="vocab-pronunciation">[${v.pronunciation}]</div>
+                    <div class="vocab-english">${v.english}</div>
+                    <div class="vocab-context">💡 ${v.context}</div>
+                    <div class="tap-hint">Tap to reveal</div>
+                </div>
+            `).join('');
+        }
+
+        // Power Flow Detail Function
+        function showPowerFlowDetail(nodeId) {
+            const detail = powerFlowDetails[nodeId];
+            if (!detail) return;
+            
+            const panel = document.getElementById('pfDetailPanel');
+            
+            // Remove active from all nodes
+            document.querySelectorAll('.pf-node, .pf-load-item').forEach(n => n.classList.remove('active'));
+            if (event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            let sectionsHtml = detail.sections.map(section => `
+                <div class="pf-detail-section">
+                    <h4>📌 ${section.title}</h4>
+                    <ul>
+                        ${section.terms.map(term => `
+                            <li>
+                                <span class="term-de">${term.de}</span><br>
+                                <span class="term-en">${term.en}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `).join('');
+            
+            panel.innerHTML = `
+                <div class="pf-detail-title">
+                    <span class="sma-logo-box" style="font-size: 0.7rem; padding: 3px 6px;">SMA</span>
+                    ${detail.title}
+                </div>
+                <div class="pf-detail-content">
+                    ${sectionsHtml}
+                </div>
+            `;
+            panel.classList.add('show');
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Flashcard Functions
+        function initFlashcards() {
+            document.getElementById('flashcardTotal').textContent = flashcardDeck.length;
+            updateFlashcard();
+        }
+
+        function updateFlashcard() {
+            const card = flashcardDeck[flashcardIndex];
+            document.getElementById('flashcardFront').textContent = card.german;
+            document.getElementById('flashcardBack').textContent = card.english;
+            document.getElementById('flashcardContext').textContent = card.context;
+            document.getElementById('flashcardCurrent').textContent = flashcardIndex + 1;
+            document.getElementById('flashcard').classList.remove('flipped');
+        }
+
+        function flipFlashcard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+        }
+
+        function nextFlashcard() {
+            flashcardIndex = (flashcardIndex + 1) % flashcardDeck.length;
+            updateFlashcard();
+        }
+
+        function prevFlashcard() {
+            flashcardIndex = (flashcardIndex - 1 + flashcardDeck.length) % flashcardDeck.length;
+            updateFlashcard();
+        }
+
+        function markKnown() {
+            knownCards.add(flashcardDeck[flashcardIndex].german);
+            document.getElementById('flashcardKnown').textContent = knownCards.size;
+            nextFlashcard();
+        }
+
+        function shuffleFlashcards() {
+            flashcardDeck = [...vocabulary].sort(() => Math.random() - 0.5);
+            flashcardIndex = 0;
+            updateFlashcard();
+        }
+
+        // Quiz Functions
+        function startQuiz() {
+            quizQuestions = [...vocabulary].sort(() => Math.random() - 0.5).slice(0, 15);
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('quizStartBtn').style.display = 'none';
+            document.getElementById('quizNextBtn').style.display = 'none';
+            updateQuizQuestion();
+        }
+
+        function updateQuizQuestion() {
+            const question = quizQuestions[currentQuizIndex];
+            const progress = ((currentQuizIndex) / quizQuestions.length) * 100;
+            
+            document.getElementById('quizProgress').style.width = progress + '%';
+            document.getElementById('quizScore').textContent = quizScore;
+            document.getElementById('quizTotal').textContent = currentQuizIndex;
+            document.getElementById('quizQuestion').textContent = question.german;
+            document.getElementById('quizHint').textContent = `Category: ${question.category} | [${question.pronunciation}]`;
+            document.getElementById('quizFeedback').classList.remove('show');
+            
+            const wrongAnswers = vocabulary
+                .filter(v => v.english !== question.english)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3)
+                .map(v => v.english);
+            
+            const options = [...wrongAnswers, question.english].sort(() => Math.random() - 0.5);
+            
+            document.getElementById('quizOptions').innerHTML = options.map(opt => `
+                <button class="quiz-option" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}', '${question.english.replace(/'/g, "\\'")}')">
+                    ${opt}
+                </button>
+            `).join('');
+        }
+
+        function checkAnswer(selected, correct) {
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('quizFeedback');
+            
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                if (opt.textContent.trim() === correct) {
+                    opt.classList.add('correct');
+                } else if (opt.textContent.trim() === selected && selected !== correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            if (selected === correct) {
+                quizScore++;
+                feedback.textContent = '✓ Richtig! (Correct!)';
+                feedback.className = 'quiz-feedback show correct';
+            } else {
+                feedback.textContent = `✗ Falsch. The answer is: ${correct}`;
+                feedback.className = 'quiz-feedback show incorrect';
+            }
+            
+            document.getElementById('quizScore').textContent = quizScore;
+            document.getElementById('quizTotal').textContent = currentQuizIndex + 1;
+            
+            if (currentQuizIndex < quizQuestions.length - 1) {
+                document.getElementById('quizNextBtn').style.display = 'inline-block';
+            } else {
+                setTimeout(showQuizResults, 1500);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuizIndex++;
+            document.getElementById('quizNextBtn').style.display = 'none';
+            updateQuizQuestion();
+        }
+
+        function showQuizResults() {
+            document.getElementById('quizOptions').innerHTML = '';
+            document.getElementById('quizQuestion').textContent = '🎉 Quiz Complete!';
+            document.getElementById('quizHint').textContent = '';
+            document.getElementById('quizFeedback').classList.remove('show');
+            document.getElementById('quizNextBtn').style.display = 'none';
+            document.getElementById('finalScore').textContent = quizScore;
+            document.getElementById('finalTotal').textContent = quizQuestions.length;
+            document.getElementById('quizResults').style.display = 'block';
+            document.getElementById('quizStartBtn').style.display = 'inline-block';
+            document.getElementById('quizStartBtn').textContent = 'Try Again 🔄';
+        }
+
+        // Diagram Functions
+        function showComponent(component) {
+            const detail = componentDetails[component];
+            const detailDiv = document.getElementById('componentDetail');
+            
+            document.querySelectorAll('#diagrams .component-box').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            detailDiv.innerHTML = `
+                <h4 style="color: var(--sma-red); margin-bottom: 10px;">${detail.title}</h4>
+                <p style="margin-bottom: 15px;">${detail.description}</p>
+                <strong>Key Terms:</strong>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    ${detail.terms.map(t => `<li style="margin-bottom: 5px;">${t}</li>`).join('')}
+                </ul>
+            `;
+            detailDiv.classList.add('show');
+        }
+
+        function showInverterType(type) {
+            const detail = inverterTypes[type];
+            const detailDiv = document.getElementById('inverterDetail');
+            
+            detailDiv.innerHTML = `
+                <h4 style="color: var(--sma-red); margin-bottom: 10px;">
+                    <span class="sma-logo-box" style="font-size: 0.7rem; padding: 2px 5px;">SMA</span>
+                    ${detail.title}
+                </h4>
+                <p style="margin-bottom: 10px;">${detail.description}</p>
+                <p style="color: var(--success);"><strong>✓ Vorteile (Pros):</strong> ${detail.pros}</p>
+                <p style="color: var(--dc-color);"><strong>✗ Nachteile (Cons):</strong> ${detail.cons}</p>
+            `;
+            detailDiv.classList.add('show');
+        }
+    </script>
+</body>
+</html>
