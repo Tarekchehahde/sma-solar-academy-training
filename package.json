@@ -1,0 +1,41 @@
+{
+  "name": "sma-solar-academy-training",
+  "displayName": "SMA Solar Academy",
+  "version": "1.0.0",
+  "description": "Interactive German-English vocabulary trainer for SMA solar inverter installation",
+  "main": "index.html",
+  "scripts": {
+    "build:android": "cordova build android",
+    "build:android:release": "cordova build android --release",
+    "run:android": "cordova run android",
+    "prepare": "cordova prepare"
+  },
+  "keywords": [
+    "sma",
+    "solar",
+    "inverter",
+    "training",
+    "german",
+    "vocabulary",
+    "photovoltaic"
+  ],
+  "author": "SMA Solar Academy",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova": "^12.0.0",
+    "cordova-android": "^12.0.0",
+    "cordova-plugin-statusbar": "^3.0.0",
+    "cordova-plugin-splashscreen": "^6.0.0",
+    "cordova-plugin-screen-orientation": "^3.0.2"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-screen-orientation": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}

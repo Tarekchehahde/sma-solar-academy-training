@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        const sizes = {ldpi: 36, mdpi: 48, hdpi: 72, xhdpi: 96, xxhdpi: 144, xxxhdpi: 192};
+        
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#c00d0d';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.15);
+            ctx.fill();
+            
+            // SMA text
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.28}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText('SMA', size/2, size * 0.45);
+            
+            // Sun emoji
+            ctx.font = `${size * 0.15}px Arial`;
+            ctx.fillText('☀️', size/2, size * 0.65);
+            
+            // Academy text
+            ctx.font = `${size * 0.1}px Arial`;
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.fillText('Academy', size/2, size * 0.85);
+            
+            return canvas.toDataURL('image/png');
+        }
+        
+        window.onload = function() {
+            let output = '';
+            for (const [name, size] of Object.entries(sizes)) {
+                const dataUrl = createIcon(size);
+                output += name + ':' + dataUrl.split(',')[1] + '\n';
+            }
+            document.body.innerText = output;
+        };
+    </script>
+</head>
+<body></body>
+</html>
